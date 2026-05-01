@@ -186,4 +186,6 @@ These tables show how MiSTer-DB9 cores route a Mega Drive pad into a non-Mega-Dr
 | Start + B (combo) | Coin |
 | Start + C (combo) | Open OSD |
 
-The `Start + B = Coin` combo is built into the mux logic for arcade cores: any time pin Start and pin B are pressed simultaneously, the same coin signal is asserted. This gives you a coin without a dedicated `Mode` button on a 3-button pad. The `Start + C = OSD` combo opens / closes the OSD on every core.
+The `Start + B = Coin` combo is built into the mux logic for arcade cores **that fit a 3-button MD pad** (Pac-Man, Galaga, Donkey Kong, Defender of the basic kind, etc.): any time pin Start and pin B are pressed simultaneously, the same coin signal is asserted. This gives you a coin without a dedicated `Mode` button on a 3-button pad. The `Start + C = OSD` combo opens / closes the OSD on every core.
+
+> **Cores requiring more than 3 game buttons** (NeoGeo, IremM72/M92, MCR1/2/3, SNES, SGB, TurboGrafx16, GBA, etc.) **do not** wire the `Start + B` chord. On those cores, `B` is a real gameplay button — accidentally pressing `Start + B` during play would otherwise insert phantom coins. Use **Mode** on a 6-button MD pad, **Select** on a DB15 pad, or the **R** button on a Saturn pad to insert a coin / open Select on these cores. A 3-button MD pad cannot play these cores anyway.
