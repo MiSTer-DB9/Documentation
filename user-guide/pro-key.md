@@ -1,6 +1,6 @@
 # The `db9pro.key` File
 
-A small subset of MiSTer-DB9 features is **key-gated**. They ship in every RBF but stay inert until a valid `db9pro.key` is found at `/media/fat/db9pro.key`. Without the file, those features behave as if they were absent: no Saturn option in the OSD acts on input, the MT32-anti-contention double gate is not enforced, and so on.
+A small subset of MiSTer-DB9 features is **key-gated**. They ship in every RBF but stay inert until a valid `db9pro.key` is found at `/media/fat/db9pro.key`. Without the file, those features behave as if they were absent: no Saturn option in the OSD acts on input, and so on. Currently only Saturn is key-gated; other DB9-fork features (DB9MD, DB15, SNAC8, MT32-pi anti-contention) are always-free.
 
 ## What unlocks with the key
 
@@ -11,7 +11,7 @@ A small subset of MiSTer-DB9 features is **key-gated**. They ship in every RBF b
 | SNAC8 | works | works (no change) |
 | **Saturn 1P / 2P adapter (digital pad)** | option in OSD does nothing | works |
 | **3D Control Pad detection** (analog switch position) | option in OSD does nothing | detection works (digital play needs SNAC mode in the Saturn core) |
-| **MT32-pi anti-contention double gate** in cores that share USER_IO between MT32 and DB9 | upstream behaviour (potentially flaky if both are wired) | both gates active |
+| MT32-pi anti-contention double gate | always active | always active (not key-gated) |
 
 ## Where to put the file
 
@@ -29,10 +29,10 @@ The file binds an unlock to a specific identity (so leaked keys are traceable) a
 |---|---|
 | `magic` (`DB9K`) | Identifies the file as a MiSTer-DB9 key. |
 | Version | Reserved for future format changes. |
-| `patron_id` | Patron identity. |
+| `customer_id` | Customer identity. |
 | `issue` / `expiry` | Validity window (typically 60–90 days). |
-| `feature_mask` | Which features this key unlocks. Bit 0 = Saturn, bit 1 = MT32; other bits reserved. |
-| Per-patron seed | Used by the FPGA challenge-response. |
+| `feature_mask` | Which features this key unlocks. Bit 0 = Saturn; bits 1..31 reserved for future gated features. |
+| Per-customer seed | Used by the FPGA challenge-response. |
 | Signature | Ed25519 signature of all of the above. |
 
 If you are curious about how the FPGA validates the file, see [../maintainer-guide/key-gate-design.md](../maintainer-guide/key-gate-design.md). End users do not need to know that detail.
@@ -41,7 +41,7 @@ If you are curious about how the FPGA validates the file, see [../maintainer-gui
 
 When the expiry passes, the FPGA gate locks again on the next boot. You will see the same "OSD option does nothing" symptom you had before installing a key. To renew:
 
-1. Get a new key file through the same channel that issued the original (the project ships keys to active patrons; renewal is automatic if you stay subscribed).
+1. Get a new key file through the same channel that issued the original (the project ships keys to active customers; renewal is automatic if you stay subscribed).
 2. Replace `/media/fat/db9pro.key` with the new file.
 3. Reboot or load the core again — the gate negotiates fresh on every core load.
 

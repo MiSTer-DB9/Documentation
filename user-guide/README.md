@@ -16,7 +16,7 @@ This section covers everything an end user needs to play games with original-har
 1. A DE10-Nano running MiSTer FPGA.
 2. A wiring adapter that brings out the `USER_IO` pins to a DB9 (Mega Drive style), DB15 (Antonio Villena splitter style), or Saturn-style connector. Adapter design is hardware — not covered in this repo.
 3. The MiSTer-DB9 `MiSTer` binary and `menu.rbf` (replace the upstream ones — see [installation.md](installation.md)).
-4. For Saturn or MT32-anti-contention features only: a valid `db9pro.key` file at `/media/fat/db9pro.key`. DB9MD, DB15, and SNAC8 work without a key.
+4. For Saturn support only: a valid `db9pro.key` file at `/media/fat/db9pro.key`. DB9MD, DB15, SNAC8, and the MT32-pi anti-contention gate work without a key.
 
 ## What this fork does NOT change
 

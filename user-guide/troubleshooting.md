@@ -63,4 +63,4 @@ If you want the technical detail, see [../maintainer-guide/the MT32 anti-content
 
 ## I want to know why a feature requires `db9pro.key`
 
-See [pro-key.md](pro-key.md). Short version: feature licensing is patron-supported; the gated features (Saturn, MT32 anti-contention) require a small per-patron key file at `/media/fat/db9pro.key`. The file expires periodically.
+See [pro-key.md](pro-key.md). Short version: feature licensing is customer-supported; the gated feature (Saturn) requires a small per-customer key file at `/media/fat/db9pro.key`. The file expires periodically.
