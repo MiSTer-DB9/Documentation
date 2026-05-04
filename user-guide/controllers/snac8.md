@@ -22,6 +22,11 @@ The set varies over time and is best read from each core's release notes or its 
 
 ## DB9 + SNAC8 share the same physical port
 
-Because SNAC8 takes the same `USER_IO` pins that DB9MD / DB15 / Saturn use, only one of the two paths can be active at any moment. The OSD makes them mutually exclusive: turning on `UserIO Joystick = DB9MD` (or DB15 or Saturn) implicitly disables SNAC mode for that core, and vice versa.
+SNAC8 takes the same `USER_IO` pins that DB9MD / DB15 / Saturn use, so only one path can drive the connector at any moment. The fork enforces this **inside the FPGA**, with SNAC always winning:
 
-If you connect a SNAC adapter to the DE10-Nano while `UserIO Joystick` is set to a DB9 mode, the DB9 module will drive its protocol onto pins the SNAC adapter doesn't expect — usually nothing breaks, but you also won't get useful inputs. Pick one or the other, save settings, reboot the core if needed.
+- When the core's SNAC mode is enabled (via its OSD entry — name varies per core), the `UserIO Joystick` setting is silently ignored. The DB9 / DB15 / Saturn protocol module is held inert (`USER_OUT` idle, `joydb_*` outputs zero), so a DB9 controller plugged into the same port produces no inputs and no OSD ghost clicks.
+- When SNAC is off, `UserIO Joystick` works as expected.
+
+The OSD does **not** grey out the `UserIO Joystick` entry when SNAC is on — the setting is just inert. If you toggle `UserIO Joystick` while SNAC is on and nothing happens, that's why. To use a DB9 / DB15 / Saturn controller on the same port, turn SNAC off in the core's OSD first.
+
+Before the gate landed (pre-2026-05-04), enabling both at once produced electrical conflicts on `USER_IO` pins and OSD ghost clicks via `joy_raw`. Cores affected: NES, SNES, SMS, Saturn, TurboGrafx16, Genesis, MegaCD, S32X, PSX, Atari7800, SGB.
