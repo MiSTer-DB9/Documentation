@@ -19,7 +19,7 @@ The DE10-Nano `USER_IO` is the same physical port as the USB3-style connector us
 | `USER_IO[6]` | `Arduino_IO8`  | 9 | `AF17` | 9 (TX+) |
 | `USER_IO[7]` *(MiSTer-DB9 extension)* | `Arduino_IO9` | 2 | `AE15` | — |
 
-`USER_IO[7]` is the bit MiSTer-DB9 adds on top of upstream's 7-bit user port: it brings out DB9 pin 2, which the Saturn protocol needs for split / 2P-mux selection. The pin had been used for `SD_SPI_CS` (secondary SD); MiSTer-DB9 reassigns it. Cores that need a secondary SD card cannot coexist with this build on the same hardware.
+`USER_IO[7]` is the bit MiSTer-DB9 adds on top of upstream's 7-bit user port: it brings out DB9 pin 2, which the DB9MD protocol needs for the Down direction. The pin had been used for `SD_SPI_CS` (secondary SD); MiSTer-DB9 reassigns it. Cores that need a secondary SD card cannot coexist with this build on the same hardware.
 
 > **Voltage note.** On the upstream "regular SNAC" wiring, the `TX+` line on the USB3-style connector is tied to 3.3 V. On the "SNAC+" variant it is `AF17` (`USER_IO[6]`). If you build or buy an adapter, make sure it matches the variant you intend to drive — feeding 3.3 V into an FPGA pin that expects a logic-level signal can damage the DE10-Nano.
 
@@ -29,15 +29,15 @@ The same physical wires carry different signal roles depending on which protocol
 
 | Pin (DB9) | DB9MD (Mega Drive) | DB15 (Villena) | Saturn |
 |---|---|---|---|
-| 1 (`USER_IO[5]`) | Up | (N/C) | (N/C) |
-| 2 (`USER_IO[7]`) | Down | (N/C) | 2P split-select (push-pull) |
-| 3 (`USER_IO[1]`) | Left | `JOY_LOAD` (push-pull) | `D0` |
-| 4 (`USER_IO[2]`) | Right | (N/C) | (N/C) |
+| 1 (`USER_IO[5]`) | Up | `JOY_DATA` | `D2` |
+| 2 (`USER_IO[7]`) | Down | (N/C) | (N/C) |
+| 3 (`USER_IO[1]`) | Left | `JOY_CLK` (push-pull) | `D0` |
+| 4 (`USER_IO[2]`) | Right | (N/C) | 2P split-select (push-pull) |
 | 5 | +5 V | +5 V | +5 V |
-| 6 (`USER_IO[3]`) | C / A button | (N/C) | (N/C) |
-| 7 (`USER_IO[0]`) | `MD_SELECT` / `TH` (push-pull) | `JOY_CLK` (push-pull) | `D1` |
+| 6 (`USER_IO[3]`) | B / A button | (N/C) | `D3` |
+| 7 (`USER_IO[0]`) | `MD_SELECT` / `TH` (push-pull) | `JOY_LOAD` (push-pull) | `D1` |
 | 8 | GND | GND | GND |
-| 9 (`USER_IO[6]`) | Start / B | `JOY_DATA` | `S1` (push-pull) |
+| 9 (`USER_IO[6]`) | C / Start | (N/C) | `S1` (push-pull) |
 | shield (`USER_IO[4]`) | (shield/GND) | (N/C) | `S0` (push-pull) |
 
 The Saturn 2P mux adapter additionally uses `USER_IO[2]` to drive the 74HC157D split-select: low = port A, high = port B.
