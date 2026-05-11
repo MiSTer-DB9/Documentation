@@ -7,7 +7,7 @@
 | Atari 2600 / 7800 stick (1-button) | `DB9MD` (auto-detect) | DB9 | Same as Mega Drive | [mega-drive.md](mega-drive.md) |
 | Neo Geo / Supergun (Antonio Villena DB15) | `DB15` | DB15 | Antonio Villena DB15 splitter | [neogeo-supergun.md](neogeo-supergun.md) |
 | Sega Saturn digital pad (Control Pad) | `Saturn` | Saturn-style mini-DIN or DB9 wired equivalent | 1P direct, or 2P with 74HC157D mux | [saturn.md](saturn.md) |
-| Sega Saturn 3D Control Pad | `Saturn` (digital position only) | Saturn-style | Same as Saturn digital | [saturn.md](saturn.md) |
+| Sega Saturn 3D Control Pad | Saturn core SNAC mode only (not UserIO) | Saturn-style | 1P passive cable + `Saturn SNAC Adapter = 1P` | [saturn.md](saturn.md) |
 | Original-console pad through SNAC8 (NES, SNES, PCE, etc.) | per-core SNAC option | varies per console | Per-console SNAC8 adapter | [snac8.md](snac8.md) |
 
 ## Choosing the right `UserIO Joystick` value
@@ -30,4 +30,4 @@
 
 ## What about analog?
 
-The DB9MD, DB15, and Saturn-digital paths are all **digital only**. Analog stick / trigger handling on the Saturn 3D Control Pad, in particular, requires a different protocol that the simple 4-phase probe cannot drive. For real analog play with a 3D Pad, the Saturn core itself has a "SNAC mode" (`Pad 1 SNAC` in the Saturn core OSD) that bypasses MiSTer-DB9's helper module entirely and lets the core's SMPC implementation talk directly to the pad.
+The DB9MD, DB15, and Saturn-digital paths are all **digital only**. The Saturn 3D Control Pad uses the Saturn 3-wire `TH`/`TR`/`TL` handshake (header `0x02` in Digital, `0x16` in Analog) in **both** switch positions, so the UserIO=Saturn 4-phase helper cannot read it in either mode — it appears as flag-present but commits no button data. For the 3D Pad, use the Saturn core's `Saturn SNAC = ON` with `Saturn SNAC Adapter = 1P`; the core's SMPC implementation talks to the pad directly and supports both Digital and Analog switch positions.
