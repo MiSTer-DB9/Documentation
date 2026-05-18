@@ -34,3 +34,33 @@ When you run **Update** from the MiSTer Scripts menu, the script downloads each 
 
 - For each core you want to use a DB controller with: open the OSD (F12 on a USB keyboard or `Start+C` on the DB9 pad after enabling), set **UserIO Joystick** to your controller type, set **UserIO Players** to 1 or 2, then **Save settings**.
 - The setting is per-core — the menu core, Mega Drive, Neo Geo, Saturn, and so on each remember their own value.
+
+## What you get by default (and how to opt in)
+
+If you have **not** set a `filter` for the ENCC database in your
+`downloader.ini`, you get the full stable set **minus** three opt-in
+channels:
+
+- `unstable` — nightly builds off upstream HEAD (for testing only).
+- `jtbeta` — jotego's beta game variants (need jotego's patreon `beta.bin`
+  key; useless without it).
+- `dualsdram` — Dual-SDRAM core variants (PSX, Saturn).
+
+If you already set your own `filter` (e.g. `filter = console`), nothing
+changes — those channels were already excluded for you.
+
+To pull a channel in, add its token to your `filter`. The Downloader rule:
+**a filter with any positive (non-`!`) term becomes an allow-list** — only
+files carrying that tag are downloaded. So:
+
+- `filter = unstable` — downloads **only** unstable cores, nothing else
+  (no stable cores, no menu). Use this only for an isolated unstable test.
+- `filter = !jtbeta !dualsdram` — keeps the **whole normal system and adds
+  unstable** (you just drop the default `!unstable`). This is the right
+  choice for testing an unstable core while keeping a working setup; pick
+  the `_Unstable/...` build in the core's OSD.
+- `filter = unstable-saturn` — only the Saturn core's unstable build
+  (allow-list, that core only). Replace `saturn` with the core slug.
+- `filter = all` — everything, including unstable, beta and Dual-SDRAM.
+
+After changing `filter`, run **Update** again.
