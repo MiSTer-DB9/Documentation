@@ -49,7 +49,13 @@ If you want the technical detail, see [../maintainer-guide/the MT32 anti-content
 
 ## DB9MD pad works for OSD navigation but in-game buttons do nothing
 
-**Cause**: The OSD path and the in-game path are independent. The in-game button mapping is per-core: it depends on which joystick bits the core reads for start, coin, and game buttons. If the core is recent and you only see this on **one** specific core, that core's mapping was probably mis-ported. Open an issue on the core's repository.
+**Cause**: The OSD path and the in-game path are independent. While the OSD is open the core *live-detects* the pad and routes it for navigation no matter what `UserIO Joystick` is set to; in-game it uses the *saved* `UserIO Joystick` value. So if that value is on the wrong protocol — e.g. `DB15` while a Mega Drive pad is plugged in — the pad navigates the OSD fine but is misread the moment you close it.
+
+**Fix**:
+
+- With `USERIO_AUTO_SELECT=1` (see [osd-menu.md](osd-menu.md)), just press a button on the pad while the OSD is open — the setting snaps to the detected protocol and the pad then works in-game too. Recent fork builds do this automatically.
+- Otherwise set `UserIO Joystick` to the protocol your pad actually uses from the keyboard, then **Save settings**.
+- If the value already matches the pad and you only see this on **one** specific core, that core's in-game mapping was probably mis-ported — open an issue on the core's repository.
 
 ## Pressing buttons during OSD navigation leaks into the game
 
