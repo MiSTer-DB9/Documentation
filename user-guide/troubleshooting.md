@@ -49,7 +49,7 @@ If the symptom you see is in this list, the cause is usually well-known. Each en
 
 **Fix**:
 
-- With `USERIO_AUTO_SELECT=1` (see [osd-menu.md](osd-menu.md)), just press a button on the pad while the OSD is open — the setting snaps to the detected protocol and the pad then works in-game too. Recent fork builds do this automatically.
+- With `userio_auto_select=1` (see [osd-menu.md](osd-menu.md)), just press a button on the pad while the OSD is open — the setting snaps to the detected protocol and the pad then works in-game too. Recent fork builds do this automatically.
 - Otherwise set `UserIO Joystick` to the protocol your pad actually uses from the keyboard, then **Save settings**.
 - If the value already matches the pad and you only see this on **one** specific core, that core's in-game mapping was probably mis-ported — open an issue on the core's repository.
 

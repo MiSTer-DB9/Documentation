@@ -14,7 +14,7 @@ The DB15 splitter uses three of the eight `USER_IO` lines:
 |---|---|
 | `USER_IO[0]` | `JOY_LOAD` (FPGA → splitter, push-pull) |
 | `USER_IO[1]` | `JOY_CLK` (FPGA → splitter, push-pull) |
-| `USER_IO[6]` | `JOY_DATA` (splitter → FPGA, input) |
+| `USER_IO[5]` | `JOY_DATA` (splitter → FPGA, input) |
 
 The FPGA drives `LOAD` once per scan to capture the parallel button state in the splitter, then clocks `CLK` 26 times to shift the bits out on `DATA`. The full scan covers both players.
 
@@ -49,9 +49,8 @@ Despite the name, the DB15 path works for any controller that exposes itself thr
 | Combo | Action |
 |---|---|
 | `Select` (button 11) | Coin |
-| `Start + B` | Coin (alternate, always present) |
 | `Start + C` | Open / close OSD |
 | `A` | OSD: confirm |
 | `B` | OSD: back |
 
-`Select` works only on cores that expose six game buttons; on simpler cores, the splitter still reports the button but the core ignores the signal and falls back to the `Start + B` coin combo.
+`Select` is the bit-11 button — the same `joydb_1[11]` slot that DB9MD exposes as `Mode`. Arcade cores wire that slot to Coin, so `Select` inserts a coin on cores that expose a coin input; cores that don't simply ignore it. The DB15 splitter has a real `Select`, so there is no `Start + B` chord here — that `Start + B → Mode` synthesis exists only on the DB9MD path for 3-button MD pads (which lack a `Mode` button). `Start + C` opens / closes the OSD on every core.

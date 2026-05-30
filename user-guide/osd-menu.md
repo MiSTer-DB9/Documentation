@@ -19,9 +19,9 @@ The order of values is fixed: **`Off, Saturn, DB9MD, DB15`**. Saturn comes first
 4. Set `UserIO Players` to 1 or 2.
 5. Pick **Save settings** so the choice survives a reboot.
 
-## Automatic detection (`USERIO_AUTO_SELECT`)
+## Automatic detection (`userio_auto_select`)
 
-Set `USERIO_AUTO_SELECT=1` in `/media/fat/MiSTer.ini` to let a DB controller configure `UserIO Joystick` for you. With it enabled:
+Set `userio_auto_select=1` in `/media/fat/MiSTer.ini` to let a DB controller configure `UserIO Joystick` for you. With it enabled:
 
 - **Open the OSD and press any button on the DB controller.** The core detects which protocol the pad speaks (Saturn / DB9MD / DB15) and sets `UserIO Joystick` to it automatically — no keyboard needed, even for first-time setup.
 - **A button press always switches to the connected pad.** This both enables the pad from `Off` *and* corrects a wrong choice: if `UserIO Joystick` was left on `DB15` while a Mega Drive pad is plugged in, pressing the pad snaps the setting to `DB9MD`. That matters because the OSD live-detects the pad while open, but the *saved* setting is what drives the game once the OSD closes — so without this you'd see the pad work in the menu but do nothing in-game.
@@ -31,11 +31,11 @@ Set `USERIO_AUTO_SELECT=1` in `/media/fat/MiSTer.ini` to let a DB controller con
 
 Pick **Save settings** afterwards if you want the detected choice to survive a reboot.
 
-With `USERIO_AUTO_SELECT=0` (the default), nothing is selected automatically — set `UserIO Joystick` from the keyboard as described above.
+With `userio_auto_select=0` (the default), nothing is selected automatically — set `UserIO Joystick` from the keyboard as described above.
 
 ## First-time setup without auto-select
 
-If `USERIO_AUTO_SELECT` is off, the first time you enable a DB controller you have to use the keyboard — the controller path is still `Off`, so it can't navigate a core's OSD yet. After you set and save a protocol once, the OSD becomes navigable from the controller. (The boot menu is always navigable with a DB controller regardless of this setting, so you can still load cores with the pad.)
+If `userio_auto_select` is off, the first time you enable a DB controller you have to use the keyboard — the controller path is still `Off`, so it can't navigate a core's OSD yet. After you set and save a protocol once, the OSD becomes navigable from the controller. (The boot menu is always navigable with a DB controller regardless of this setting, so you can still load cores with the pad.)
 
 ## Navigating the OSD with a DB controller
 
@@ -49,7 +49,7 @@ After `UserIO Joystick` is set and saved:
 | Back / Exit | `B` | `B` |
 | Close OSD | `Start + C` | `Start + C` |
 
-Inserting a coin in arcade cores is the same combo as the upstream layout: `Mode` (or `Select` on DB15) alone, or `Start + B` together — whichever the core's mapping picks up. See the per-core button notes in [controllers/](controllers/).
+Inserting a coin in arcade cores uses the bit-11 (`Mode`) slot: `Mode` on a 6-button MD pad, `Start + B` on a 3-button MD pad (the DB9MD helper synthesizes `Mode` from that chord, since a 3-button pad has no `Mode` button), `Select` on a DB15 pad, or `R` on a Saturn pad. See the per-core button notes in [controllers/](controllers/).
 
 ## Why Saturn comes first
 

@@ -16,7 +16,7 @@ A small subset of MiSTer-DB9 features is **key-gated**. They ship in every RBF b
 ## Where to put the file
 
 - Path: `/media/fat/db9pro.key`
-- Size: 128 bytes (do not edit by hand — the file carries a signature).
+- Size: 64 bytes (do not edit by hand — the file carries a signature).
 - Permissions: any user-readable mode.
 
 If the file is missing, the wrong size, or the signature does not verify, the gate stays locked. There is no error popup — the OSD options that depend on the key simply do nothing.
@@ -32,8 +32,8 @@ The file binds an unlock to a specific identity (so leaked keys are traceable) a
 | `customer_id` | Customer identity. |
 | `issue` / `expiry` | Validity window (typically 60–90 days). |
 | `feature_mask` | Which features this key unlocks. Bit 0 = Saturn; bits 1..31 reserved for future gated features. |
-| Per-customer seed | Used by the FPGA challenge-response. |
-| Signature | Ed25519 signature of all of the above. |
+| Per-customer seed | Per-customer value (informational; reserved for a future challenge-response mode). |
+| Signature | Cryptographic signature over all of the above — the FPGA rejects any key whose signature does not verify. |
 
 End users do not need to know how the FPGA validates the file.
 
@@ -49,7 +49,7 @@ When the expiry passes, the FPGA gate locks again on the next boot. You will see
 
 In order, check:
 
-1. Is the file exactly 128 bytes? (`ls -l /media/fat/db9pro.key`)
+1. Is the file exactly 64 bytes? (`ls -l /media/fat/db9pro.key`)
 2. Is the SD card real-time clock close to current? An RTC reset to 1970 can fail the validity check.
 3. Is the MiSTer build the MiSTer-DB9 build, not stock upstream? See [installation.md](installation.md).
 4. Is the core itself a MiSTer-DB9 build? Stock upstream RBFs do not contain the gate logic.

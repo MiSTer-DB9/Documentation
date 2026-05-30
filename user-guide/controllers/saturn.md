@@ -41,12 +41,12 @@ For the 2P adapter, the split-select on `USER_IO[2]` toggles between port A (low
 | 8 | Y |
 | 9 | Z |
 | 10 | Start |
-| 11 | unused |
+| 11 | R trigger (occupies the Mode/Select slot) |
 | 12 | L trigger |
-| 13 | R trigger |
+| 13 | unused |
 | 15:14 | unused |
 
-Bits [10:0] line up with DB9MD and DB15. Bits [13:12] (the shoulder triggers) are Saturn-only.
+Bits [10:0] line up with DB9MD and DB15. The L and R shoulder triggers (bits 12 and 11) are Saturn-only — R reuses the bit-11 Mode/Select slot.
 
 ## Pad detection (the reason 2P adapters don't ghost-input)
 
@@ -56,7 +56,7 @@ The helper module computes a 4-bit `MD_ID` from the pad's response at the `{S0=1
 |---|---|---|
 | `0xB` | Standard 6-button digital Control Pad | full button data committed |
 | `0x5` | 3D Control Pad in the **Analog** switch position | flagged "present" only (helper accidentally OR-reduces the 3-wire response to `0x5`); no digital data extractable here — use the Saturn core's SNAC mode |
-| `0xA` | Saturn Stunner / Virtua Gun (HSS-0152) | flagged "present" only — use the Saturn core's SNAC mode (SMPC auto-detects Stunner via `PS_NOTHING_STUNNER`); set `Saturn SNAC Adapter = 1P` if you are on the passive cable |
+| `0xA` | Saturn Stunner / Virtua Gun (HSS-0152) | **not** matched by the UserIO helper — the port reads as nothing connected here. Stunner detection happens only in the Saturn core's SMPC/SNAC path (`PS_NOTHING_STUNNER`); use the Saturn core's SNAC mode, and set `Saturn SNAC Adapter = 1P` if you are on the passive cable |
 | anything else | nothing connected, floating mux input, or 3D Pad in **Digital** switch position (uses 3-wire handshake, not the 4-phase protocol) | no data committed, port reads as zero |
 
 A 4-bit shift register debounces the detection: a pad has to be missed four scans in a row (≈572 µs) before it is treated as disconnected, but a single hit (≈143 µs) brings it back. Both ports start out marked "disconnected" — there are no ghost inputs at boot, and unconnected sides of a 2P mux adapter never leak phantom presses.
@@ -91,7 +91,12 @@ The 2P 74HC157D mux only handles the 4 D-lines and has no spare channel for TL r
 
 | Combo | Action |
 |---|---|
-| `Start + B` | Coin (in arcade cores) |
 | `Start + C` | Open / close OSD |
 | `A` | OSD: confirm |
 | `B` | OSD: back |
+
+On arcade cores, Coin is wired to the `joydb_1[11]` slot (the bit-11 button that DB9MD exposes as `Mode`); on a Saturn pad that slot is the `R` trigger, so `R` inserts the coin. The shared DB9MD `Start + B → Mode` synthesis does **not** run on the Saturn path — it is gated to DB9MD 3-button pads.
+
+**Exception — PSX.** Individual cores may still define their own Saturn-pad combos. The PSX core consumes the Saturn pad through a dedicated arm (`PSX.sv`): the Saturn `L`/`R` shoulder triggers map to PSX shoulder buttons, and `Start + B` is synthesized as PSX `Select` (with `Start` and `B` masked while the combo is held). So on PSX the bit-11 (`R`) slot is a real shoulder button, not Coin, and `Start + B` is the synthesized extra button.
+
+`Start + C` opens / closes the OSD on every core.
