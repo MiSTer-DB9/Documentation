@@ -6,8 +6,6 @@ This repo holds the **[user-guide/](user-guide/)** — for people running MiSTer
 
 It is published as a website at <https://mister-db9.github.io/>.
 
-> Maintainer-facing documentation (porting recipe, marker conventions, key-gate design, merge-safety rules, hardware hazards) lives in the separate private [Documentation-Maintainer](https://github.com/MiSTer-DB9/Documentation-Maintainer) repo.
-
 ## What MiSTer-DB9 adds on top of MiSTer FPGA
 
 | Feature | Always-free | Key-gated |

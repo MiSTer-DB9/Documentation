@@ -56,5 +56,3 @@ Inserting a coin in arcade cores is the same combo as the upstream layout: `Mode
 When you cycle the `UserIO Joystick` value, the OSD walks the list in order. If `DB9MD` were listed before Saturn, plugging in a Saturn pad and clicking once would activate `DB9MD` first. The DB9MD module would drive the MD `SELECT` line and read the Saturn pad's data lines as garbage button presses, sending phantom OSD inputs that make it impossible to keep clicking through to Saturn.
 
 Putting Saturn first means: with a Saturn pad connected, the first click goes straight to the right protocol. With a Mega Drive pad connected, even though the cycle visits Saturn first, the Saturn detection logic stays inert (it requires a Saturn-specific signature that a Mega Drive pad cannot accidentally produce), so no ghost inputs reach the menu.
-
-If you want the technical detail, see [the Saturn OSD-cycle hazard notes](https://github.com/MiSTer-DB9/Documentation-Maintainer/blob/main/maintainer-guide/the Saturn OSD-cycle rule).

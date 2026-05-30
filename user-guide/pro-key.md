@@ -35,7 +35,7 @@ The file binds an unlock to a specific identity (so leaked keys are traceable) a
 | Per-customer seed | Used by the FPGA challenge-response. |
 | Signature | Ed25519 signature of all of the above. |
 
-If you are curious about how the FPGA validates the file, see [the key-gate design notes](https://github.com/MiSTer-DB9/Documentation-Maintainer/blob/main/maintainer-guide/key-gate-design.md). End users do not need to know that detail.
+End users do not need to know how the FPGA validates the file.
 
 ## Renewing an expired key
 
