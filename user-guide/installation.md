@@ -11,17 +11,20 @@ Two files on the SD card root must be the MiSTer-DB9 versions:
 | `MiSTer` (the Linux ARM binary) | `https://github.com/MiSTer-DB9/Main_MiSTer/tree/master/releases` (latest release) |
 | `menu.rbf` (the menu core) | `https://github.com/MiSTer-DB9/Menu_MiSTer/tree/master/releases` (latest release) |
 
-The cores themselves (`<core>.rbf` files in `_<system>/` directories) are also DB9-built and ship from each per-core fork repository under the `MiSTer-DB9` GitHub organisation. The recommended way to keep them up to date is the updater script described below.
+The cores themselves (`<core>.rbf` files in `_<system>/` directories) are also DB9-built and ship from each per-core fork repository under the `MiSTer-DB9` GitHub organisation. The recommended way to keep everything up to date is `update_all.sh`, described below.
 
-## Updater script
+## Keeping everything up to date (update_all.sh)
 
-To keep every core in sync with the DB9 build (falling back to the upstream build when no DB9 build exists), drop the updater script at `/Scripts/update.sh` on the SD card:
+There is **no separate DB9 updater script** — use the standard MiSTer **`update_all.sh`**. You add the MiSTer-DB9 **ENCC distribution database** to it, and it then downloads the DB9 build of each core (falling back to the upstream build when no DB9 build exists). The database also carries the DB9 `MiSTer` binary and `menu.rbf`, so enabling it replaces those for you — the table above is only needed for a manual install without `update_all`.
 
-```
-https://raw.githubusercontent.com/theypsilon/Updater_script_MiSTer_DB9/master/update.sh
-```
+1. Run **`update_all`** from the MiSTer **Scripts** menu (it ships with most setups; otherwise install it from the [Update All project](https://github.com/theypsilon/Update_All_MiSTer)).
+2. In the `update_all` settings **GUI**, add the MiSTer-DB9 ENCC distribution database — no manual `downloader.ini` editing required. Its database URL is:
 
-When you run **Update** from the MiSTer Scripts menu, the script downloads each core: it picks the MiSTer-DB9 build if one exists for that core, otherwise the upstream build. The first run is slow (downloads everything); subsequent runs are incremental.
+   ```
+   https://raw.githubusercontent.com/MiSTer-DB9/Distribution_MiSTer/main/dbencc.json.zip
+   ```
+
+3. Run `update_all`. The first run is slow (downloads everything); subsequent runs are incremental.
 
 ## Boot sequence to expect
 
@@ -37,9 +40,10 @@ When you run **Update** from the MiSTer Scripts menu, the script downloads each 
 
 ## What you get by default (and how to opt in)
 
-If you have **not** set a `filter` for the ENCC database in your
-`downloader.ini`, you get the full stable set **minus** three opt-in
-channels:
+The opt-in channels are controlled by a `filter`, which you can edit from
+the `update_all` GUI (it writes `downloader.ini` for you). If you have **not**
+set a `filter` for the ENCC database, you get the full stable set **minus**
+three opt-in channels:
 
 - `unstable` — nightly builds off upstream HEAD (for testing only).
 - `jtbeta` — jotego's beta game variants (need jotego's patreon `beta.bin`
@@ -63,4 +67,4 @@ files carrying that tag are downloaded. So:
   (allow-list, that core only). Replace `saturn` with the core slug.
 - `filter = all` — everything, including unstable, beta and Dual-SDRAM.
 
-After changing `filter`, run **Update** again.
+After changing `filter`, run **`update_all`** again.
