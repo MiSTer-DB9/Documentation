@@ -23,7 +23,7 @@ The order of values is fixed: **`Off, Saturn, DB9MD, DB15`**. Saturn comes first
 
 Set `userio_auto_select=1` in `/media/fat/MiSTer.ini` to let a DB controller configure `UserIO Joystick` for you. With it enabled:
 
-- **Open the OSD and press any button on the DB controller.** The core detects which protocol the pad speaks (Saturn / DB9MD / DB15) and sets `UserIO Joystick` to it automatically — no keyboard needed, even for first-time setup.
+- **Open the OSD and press any button on the DB controller.** The core detects which protocol the pad speaks (Saturn / DB9MD / DB15) and sets `UserIO Joystick` to it automatically — no keyboard or USB/Bluetooth gamepad needed, even for first-time setup.
 - **A button press always switches to the connected pad.** This both enables the pad from `Off` *and* corrects a wrong choice: if `UserIO Joystick` was left on `DB15` while a Mega Drive pad is plugged in, pressing the pad snaps the setting to `DB9MD`. That matters because the OSD live-detects the pad while open, but the *saved* setting is what drives the game once the OSD closes — so without this you'd see the pad work in the menu but do nothing in-game.
 - **An idle controller never changes the setting.** Detection acts only on an actual button press. If you want to use a USB pad but left a DB adapter plugged in, it won't hijack your setting — leave the DB pad untouched and the value stays put.
 - **To keep the DB controller disabled**, set `UserIO Joystick` to `Off` from the keyboard and don't press the DB pad. (A press means "use this pad", so it re-enables.)
