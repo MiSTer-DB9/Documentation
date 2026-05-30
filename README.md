@@ -16,7 +16,7 @@ It is published as a website at <https://mister-db9.github.io/>.
 | OSD navigation from the DB9 controller (Start+C / A / B) | yes | — |
 | Saturn 1P + 2P adapter (74HC157D mux) digital pad | — | yes (`db9pro.key`) |
 | 3D Control Pad (Saturn) detection on non-Saturn cores | — | yes |
-| MT32-pi anti-contention double gate | — | yes |
+| MT32-pi anti-contention double gate | yes | — |
 
 "Key-gated" features ship in every RBF but stay inert until a valid `db9pro.key` is present at `/media/fat/db9pro.key`. See [user-guide/pro-key.md](user-guide/pro-key.md).
 
