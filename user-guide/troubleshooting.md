@@ -31,7 +31,7 @@ If the symptom you see is in this list, the cause is usually well-known. Each en
 - The core is a pre-fix build. Update it.
 - One side is wired but the cable is intermittent — the detection is engaging and disengaging fast enough to leak a sample. Reseat the connector.
 
-If you want the technical detail, see [../maintainer-guide/the Saturn-2P-ghost rule](../maintainer-guide/the Saturn-2P-ghost rule).
+If you want the technical detail, see [the Saturn 2P ghost-input notes](https://github.com/MiSTer-DB9/Documentation-Maintainer/blob/main/maintainer-guide/the Saturn-2P-ghost rule).
 
 ## OSD becomes very laggy on cores that have both DB9 and MT32-pi
 
@@ -45,7 +45,7 @@ If you want the technical detail, see [../maintainer-guide/the Saturn-2P-ghost r
 - If both features must coexist on the same hardware, use a **USERIO2** build of the core where available. USERIO2 routes MT32 to a separate set of FPGA pins, so DB9 and MT32 don't share the bus. Look for `<core>_USERIO2.rbf` in the core's release folder.
 - If you don't actually use MT32-pi, set the OSD's MT32 option to `Disable`. That short-circuits the contention regardless.
 
-If you want the technical detail, see [../maintainer-guide/the MT32 anti-contention rule](../maintainer-guide/the MT32 anti-contention rule).
+If you want the technical detail, see [the MT32-pi contention notes](https://github.com/MiSTer-DB9/Documentation-Maintainer/blob/main/maintainer-guide/the MT32 anti-contention rule).
 
 ## DB9MD pad works for OSD navigation but in-game buttons do nothing
 

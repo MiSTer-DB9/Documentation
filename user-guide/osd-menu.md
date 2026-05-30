@@ -57,4 +57,4 @@ When you cycle the `UserIO Joystick` value, the OSD walks the list in order. If 
 
 Putting Saturn first means: with a Saturn pad connected, the first click goes straight to the right protocol. With a Mega Drive pad connected, even though the cycle visits Saturn first, the Saturn detection logic stays inert (it requires a Saturn-specific signature that a Mega Drive pad cannot accidentally produce), so no ghost inputs reach the menu.
 
-If you want the technical detail, see [../maintainer-guide/the Saturn OSD-cycle rule](../maintainer-guide/the Saturn OSD-cycle rule).
+If you want the technical detail, see [the Saturn OSD-cycle hazard notes](https://github.com/MiSTer-DB9/Documentation-Maintainer/blob/main/maintainer-guide/the Saturn OSD-cycle rule).
