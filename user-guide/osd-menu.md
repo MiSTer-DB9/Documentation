@@ -1,6 +1,6 @@
 # OSD Menu
 
-Every MiSTer-DB9 core adds two extra OSD options for direct controllers.
+Every MiSTer-DB9 core adds OSD options for direct controllers.
 
 ## The options
 
@@ -8,6 +8,7 @@ Every MiSTer-DB9 core adds two extra OSD options for direct controllers.
 |---|---|---|
 | `UserIO Joystick` | `Off` / `Saturn` / `DB9MD` / `DB15` | Selects the protocol used to read the controller. `Off` reverts to USB-only behaviour. |
 | `UserIO Players` | `1 Player` / `2 Players` | Whether one or two physical pads are wired (DB9MD splitter, DB15 splitter, Saturn 2P adapter with 74HC157D mux). |
+| `Define DB9 buttons` | — | Remap which physical button does what, saved per core/per controller type. See [Define DB9 Buttons](define-db9-buttons.md). |
 
 The order of values is fixed: **`Off, Saturn, DB9MD, DB15`**. Saturn comes first on purpose — see the note below.
 
