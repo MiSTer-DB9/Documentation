@@ -53,6 +53,23 @@ If the symptom you see is in this list, the cause is usually well-known. Each en
 - Otherwise set `UserIO Joystick` to the protocol your pad actually uses from the keyboard, then **Save settings**.
 - If the value already matches the pad and you only see this on **one** specific core, that core's in-game mapping was probably mis-ported — open an issue on the core's repository.
 
+## Only the D-pad works on a DB15 / DB9MD pad (buttons dead)
+
+**You are doing**: running a MiSTer-DB9 core with the **stock** upstream `MiSTer` binary (not the MiSTer-DB9 one), `UserIO Joystick` set to `DB15` or `DB9MD`.
+
+**You see**: up/down/left/right work, every button does nothing.
+
+**Cause**: The core's button layout is a small table that the MiSTer-DB9 `MiSTer` binary loads into the core at start. Core builds from May to September 2026 had no built-in table, so with the stock binary nothing ever filled it in and every button read as released.
+
+**Fix**: Update the core. Current builds carry a built-in factory layout, derived from the core's own button list, and use it until the MiSTer-DB9 binary sends its own. On the stock binary you get:
+
+- `UserIO Joystick` selection and its persistence, DB15 and DB9MD gameplay with the factory layout, and Start+C to open the OSD.
+
+What still needs the MiSTer-DB9 `MiSTer` binary (see [installation.md](installation.md)):
+
+- Navigating the OSD with the pad, automatic pad detection while the OSD is open, and the "Define DB9 buttons" page.
+- Saturn pads (the `db9pro.key` unlock is sent by the MiSTer-DB9 binary).
+
 ## Pressing buttons during OSD navigation leaks into the game
 
 **You see**: Inserting coins or firing weapons happens "in the background" while you are in the menu.
