@@ -16,6 +16,19 @@ Unlike DB9MD / DB15 / Saturn, SNAC8 is **not** a uniform path through the MiSTer
 - The cable / adapter pinout (NES SNAC ≠ SNES SNAC ≠ PCE SNAC ≠ Saturn SNAC).
 - Which controllers are supported (e.g. PSX SNAC handles DualShock; SNES SNAC handles standard pads + multi-tap with caveats).
 
+## SNES and NES: `SNAC Pinout`
+
+SNES and NES have a `SNAC Pinout` entry in the `Input Options` page, shown only while SNAC is on:
+
+- `DB9` (default): MiSTer-DB9 DB9 adapters, where player 2's clock is on `USER_IO[6]` and its data on `USER_IO[3]`.
+- `USB3`: the vanilla USB3 SNAC adapters used with upstream MiSTer, where the two player 2 pins are swapped.
+
+Player 1 uses the same pins on both adapter types, so it works with either setting. Only player 2 needs the right choice.
+
+With a USB3 adapter, select `USB3` before you connect a player 2 controller. With the `DB9` setting the core drives `USER_IO[6]` actively high and low as player 2's clock. On a USB3 adapter that pin is player 2's data output, or a 3.3 V line on "regular SNAC" adapters (see [Pinout reference](../pinout-reference.md)), so the FPGA drives against it. Player 2 also does not respond. Changing `SNAC Pinout` restarts player 2 detection, so you do not need to turn SNAC off and on again.
+
+SGB SNAC is player 1 only, so it has no such option and works on both adapter types.
+
 ## Cores known to support a SNAC option
 
 The set varies over time and is best read from each core's release notes or its OSD. The fork-wide commitment is just "the eight pins are wired through and you can drive them" — what each core does with them is the core's own decision.
