@@ -43,6 +43,17 @@ If the symptom you see is in this list, the cause is usually well-known. Each en
 - If both features must coexist on the same hardware, use a **USERIO2** build of the core where available. USERIO2 routes MT32 to a separate set of FPGA pins, so DB9 and MT32 don't share the bus. Look for `<core>_USERIO2.rbf` in the core's release folder.
 - If you don't actually use MT32-pi, set the OSD's MT32 option to `Disable`. That short-circuits the contention regardless.
 
+## DB9 pad does nothing while an MT32-pi is plugged in
+
+**You see**: with an MT32-pi on the user port, the DB9 / DB15 / Saturn pad does not navigate the OSD, is not autodetected, and does nothing in game. The `UserIO Joystick` setting does not change on its own.
+
+**Cause**: this is on purpose. The MT32-pi and the DB9 adapter share the same user port pins. When the MT32-pi is running, every core and the Menu core switch DB9 input off automatically, so its audio signals are never read as button presses and DB9 never drives pins against it.
+
+**Fix**:
+
+- Unplug the MT32-pi to use a DB9 controller. DB9 works again about a tenth of a second later.
+- To use both at the same time, use a **USERIO2** build of the core where available (MT32 on a separate set of pins).
+
 ## DB9MD pad works for OSD navigation but in-game buttons do nothing
 
 **Cause**: The OSD path and the in-game path are independent. While the OSD is open the core *live-detects* the pad and routes it for navigation no matter what `UserIO Joystick` is set to; in-game it uses the *saved* `UserIO Joystick` value. So if that value is on the wrong protocol — e.g. `DB15` while a Mega Drive pad is plugged in — the pad navigates the OSD fine but is misread the moment you close it.
