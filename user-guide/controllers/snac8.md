@@ -29,6 +29,10 @@ With a USB3 adapter, select `USB3` before you connect a player 2 controller. Wit
 
 SGB SNAC is player 1 only, so it has no such option and works on both adapter types.
 
+## Paprium: no SNAC since V.08
+
+The Paprium core's upstream removed its SNAC option in V.08. To use a Mega Drive pad on the user port, connect it through a DB9 adapter and set `UserIO Joystick` to `DB9MD`.
+
 ## Cores known to support a SNAC option
 
 The set varies over time and is best read from each core's release notes or its OSD. The fork-wide commitment is just "the eight pins are wired through and you can drive them" — what each core does with them is the core's own decision.
